@@ -1,7 +1,7 @@
 FROM node:10
 WORKDIR /app
-COPY package*.json ./
-RUN npm install --only=prod
 COPY . .
+RUN npm install --only=prod
+RUN npm run lint
 EXPOSE 8080
 CMD [ "npm", "start" ]
