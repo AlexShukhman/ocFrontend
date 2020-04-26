@@ -4,12 +4,14 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js",
-    "lint": "eslint .",
+    "lint": "eslint . --fix",
     "build": "docker build -t gcr.io/encrypted-chat-1/main .",
     "push": "docker push gcr.io/encrypted-chat-1/main"
   },
   "author": "The Obscure Chat",
-  "pre-commit": ["lint"],
+  "pre-commit": [
+    "lint"
+  ],
   "dependencies": {
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
@@ -19,6 +21,7 @@
     "js-yaml": "^3.13.1",
     "morgan": "^1.9.1",
     "pug": "^2.0.4",
+    "sentencer": "^0.2.1",
     "serve-favicon": "^2.5.0",
     "serverless-http": "^2.2.0"
   },
