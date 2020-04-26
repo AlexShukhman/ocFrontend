@@ -10,31 +10,27 @@ body {
   font-size: 12pt;
 }
 
-h1,
-h2 {
-  text-align: center;
-}
-
-h2 {
-  padding-top: 0;
+h1 {
+  margin-bottom: 0;
 }
 
 div {
-  padding: 2vh 5vw;
+  padding: 2vh 2vmin;
   text-align: center;
 }
 
 div img {
-  display: block;
   margin: auto;
   height: 28vmin;
 }
 
 p {
-  text-align: center;
+  text-align: inherit;
   text-justify: inter-word;
   white-space: pre-line;
   word-break: normal;
+  margin-block-end: inherit;
+  margin-block-start: 0em;
 }
 
 button {
@@ -49,6 +45,19 @@ span {
 .messenger {
   text-align: center;
   font-weight: bolder;
+}
+
+.tagline {
+  font-style: italic;
+  margin-bottom: 2vmin;
+}
+
+.footer {
+  font-size: 2.5vmin;
+}
+
+.err {
+  color: crimson;
 }
 
 .you {
@@ -68,18 +77,45 @@ span {
   /* font-style: italic; */
 }
 
-.cornered {
+.corneredL {
   margin: 0;
   top: 0;
   left: 0;
   text-align: left;
   opacity: 0.5;
+  position: absolute;
+  margin-block-end: 0;
+  margin-block-start: 0em;
+  margin-top: 1em;
+}
+
+.corneredR {
+  margin: 0;
+  top: 0;
+  right: 0;
+  text-align: right;
+  opacity: 0.5;
+  position: absolute;
+  margin-top: 1.5em;
 }
 
 img.smaller {
   height: 5vmin;
 }
 
-p.smaller {
-  font-size: 8pt;
+p.smaller,
+span.smaller,
+input.smaller,
+button.smaller {
+  font-size: 2vmin;
+}
+
+input.smaller {
+  width: 15vmin;
+}
+
+.chat,
+#footer {
+  margin: auto;
+  max-width: 80vw;
 }

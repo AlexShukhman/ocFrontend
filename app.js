@@ -87,7 +87,7 @@ app.get('/r/:num', (req, res, next) => {
 	const newUrl = `/r/${Number(num || 0)}?u=${uname}`;
 
 	if (req.url !== newUrl) {
-		return res.redirect(newUrl);
+		return res.redirect(302, newUrl);
 	}
 	
 	return next();
@@ -100,12 +100,20 @@ app.get('/r/:num', (req, res, next) => {
 			uname
 		});
 	} else {
-		res.redirect('/');
+		res.redirect(302, '/404');
 	}
 });
 
+app.get('/**/styles/style.css', (_req, res) => {
+	res.redirect('/styles/style.css');
+});
+
+app.get('/404', (_req, res) => {
+	res.status(404).render('404');
+});
+
 app.get('/*', (_req, res) => {
-	res.redirect('/');
+	res.redirect('/404');
 });
 
 module.exports = app;

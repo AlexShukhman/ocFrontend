@@ -16,5 +16,5 @@ function goToRoomFromInput() {
 		.replace(' ', '_')
 		.replace('-', '_')
 		.toLowerCase();
-	window.location.href = `./r/${$('#room').get(0).value}?u=${uname}`;
+	window.location.href = `/r/${$('#room').get(0).value}?u=${uname}`;
 }

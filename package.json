@@ -12,7 +12,8 @@
     "start": "nodemon index.js",
     "lint": "eslint . --fix",
     "build": "docker build -t gcr.io/encrypted-chat-1/main .",
-    "push": "docker push gcr.io/encrypted-chat-1/main"
+    "push": "docker push gcr.io/encrypted-chat-1/main",
+    "update": "gcloud run deploy oc-frontend --project encrypted-chat-1 --platform managed --image gcr.io/encrypted-chat-1/main"
   },
   "author": "The Obscure Chat",
   "pre-commit": [
