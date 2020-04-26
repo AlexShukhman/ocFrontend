@@ -2,6 +2,12 @@
   "name": "ocfrontend",
   "version": "1.0.0",
   "main": "index.js",
+  "description": "The frontend application for the Obscure Chat",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/AlexShukhman/ocFrontend"
+  },
+  "license" : "MIT",
   "scripts": {
     "start": "nodemon index.js",
     "lint": "eslint . --fix",
