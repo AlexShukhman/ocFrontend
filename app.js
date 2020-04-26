@@ -1,3 +1,12 @@
+/**
+ * Welcome to the frontend of the Obscure Chat!
+ *
+ * Please take a look around, but note that contributing to this is not accepted
+ * 	at this time... (sorry!)
+ *
+ * - MGMT
+ */
+/* global BigInt */
 const express = require('express');
 const app = express();
 const favicon = require('serve-favicon');
@@ -48,16 +57,20 @@ function createSitemap() {
 	// const minUrlLen = domain.length;
 	// const totalAvailablePlaces = maxUrlLen-minUrlLen;
 	// const allAvailableNumbers = 10**totalAvailablePlaces;
-	const header = '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+	const header = '<urlset xmlns=' +
+		'"http://www.sitemaps.org/schemas/sitemap/0.9">';
 	const footer = '</urlset>';
 	const pre = '<url><loc>';
-	const post = '</loc><changefreq>always</changefreq><priority>0.5</priority></url>';
+	const post = '</loc><changefreq>always</changefreq>' +
+		'<priority>0.5</priority></url>';
 
 	let out = header;
 
 	out += pre + domain + '*' + post;
 
-	out += `<url><loc>${domain}</loc><changefreq>monthly</changefreq><priority>1</priority></url>`;
+	out += `<url><loc>${
+		domain
+	}</loc><changefreq>monthly</changefreq><priority>1</priority></url>`;
 	out += footer;
 
 	return out;
@@ -75,7 +88,12 @@ app.get('/sitemap.xml', (_req, res) => {
 });
 
 app.get('/r/:num', (req, res, next) => {
-	const num = req.params.num;
+	let num;
+	try {
+		num = BigInt(Number(req.params.num || 0));
+	} catch (_e) {
+		res.redirect(302, '/404');
+	}
 	const uname = (req.query.u || 'unknown_rebel')
 		// disabling lint because it appears to be incorrect here...
 		// eslint-disable-next-line no-useless-escape
@@ -84,24 +102,20 @@ app.get('/r/:num', (req, res, next) => {
 		.replace(' ', '_')
 		.replace('-', '_')
 		.toLowerCase();
-	const newUrl = `/r/${Number(num || 0)}?u=${uname}`;
+	const newUrl = `/r/${num.toString()}?u=${uname}`;
 
 	if (req.url !== newUrl) {
 		return res.redirect(302, newUrl);
 	}
-	
+
 	return next();
 }, (req, res) => {
 	const uname = req.query.u;
-	const num = Number(req.params.num);
-	if (!isNaN(num)) {
-		res.render('index', {
-			num,
-			uname
-		});
-	} else {
-		res.redirect(302, '/404');
-	}
+	const num = BigInt(Number(req.params.num));
+	res.render('index', {
+		num: num.toString(),
+		uname
+	});
 });
 
 app.get('/**/styles/style.css', (_req, res) => {

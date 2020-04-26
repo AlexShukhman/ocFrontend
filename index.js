@@ -8,6 +8,7 @@ var server = http.createServer(app);
 
 server.listen(port);
 
+// eslint-disable-next-line no-console
 console.log('Server listening on port ' + port);
 
 function normalizePort(val) {
