@@ -17,6 +17,7 @@ const robots = require('express-robots-txt');
 const logger = require('morgan');
 const path = require('path');
 const sentencer = require('sentencer');
+const converter = require('number-to-words');
 
 // Set Up App
 app.set('views', join(__dirname, 'public', 'views'));
@@ -50,6 +51,9 @@ app.use(robots([
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
+const maxSize = process.env.maxSize || 15;
+const maxWord = converter.toWords(10**maxSize);
+
 // Helpers
 function createSitemap() {
 	const domain = 'https://obscure.chat/r/';
@@ -79,20 +83,23 @@ function createSitemap() {
 // Routes
 app.get('/', (_req, res) => {
 	const newUname = sentencer.make('{{ adjective }} {{ noun }}');
-	res.render('home', { newUname });
+	return res.render('home', { newUname });
 });
 
 app.get('/sitemap.xml', (_req, res) => {
 	res.set('Content-Type', 'text/xml');
-	res.send(createSitemap());
+	return res.send(createSitemap());
 });
 
 app.get('/r/:num', (req, res, next) => {
 	let num;
+	if (req.params.num && req.params.num.length > maxSize) {
+		return res.redirect(302, '/toobig');
+	}
 	try {
 		num = BigInt(Number(req.params.num || 0));
 	} catch (_e) {
-		res.redirect(302, '/404');
+		return res.redirect(302, '/404');
 	}
 	const uname = (req.query.u || 'unknown_rebel')
 		// disabling lint because it appears to be incorrect here...
@@ -112,22 +119,26 @@ app.get('/r/:num', (req, res, next) => {
 }, (req, res) => {
 	const uname = req.query.u;
 	const num = BigInt(Number(req.params.num));
-	res.render('index', {
+	return res.render('index', {
 		num: num.toString(),
 		uname
 	});
 });
 
+app.get('/toobig', (_req, res) => {
+	return res.status(404).render('tooBig', { maxSize, maxWord });
+});
+
 app.get('/**/styles/style.css', (_req, res) => {
-	res.redirect('/styles/style.css');
+	return res.redirect('/styles/style.css');
 });
 
 app.get('/404', (_req, res) => {
-	res.status(404).render('404');
+	return res.status(404).render('404');
 });
 
 app.get('/*', (_req, res) => {
-	res.redirect('/404');
+	return res.redirect('/404');
 });
 
 module.exports = app;
