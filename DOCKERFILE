@@ -4,4 +4,4 @@ COPY . .
 RUN npm install --only=prod
 RUN npm run lint
 EXPOSE 8080
-CMD [ "npm", "start" ]
+CMD [ "node", "index.js" ]
