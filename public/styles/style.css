@@ -42,6 +42,27 @@ span {
   margin: 0 15pt;
 }
 
+.inv {
+  background-color: #111;
+  color: #bbb;
+}
+
+input.inv {
+  background-color: #222;
+  color: #bbb;
+  border: none;
+}
+
+button.inv {
+  background-color: #555;
+  color: #bbb;
+  border: none;
+}
+
+a.inv {
+  color: #666;
+}
+
 .messenger {
   text-align: center;
   font-weight: bolder;

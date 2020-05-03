@@ -119,7 +119,8 @@ app.get('/r/:num', (req, res, next) => {
 }, (req, res) => {
 	const uname = req.query.u;
 	const num = BigInt(Number(req.params.num));
-	return res.render('index', {
+	const whichIndex = num >= 0 ? 'index' : 'inv_index';
+	return res.render(whichIndex, {
 		num: num.toString(),
 		uname
 	});
